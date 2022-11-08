@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="300" height="200" style="border:1px solid black"></canvas>
+
+    <script type="text/javascript">
+
+
+        // Language: javascript
+        //使用JavaScript写一个贪吃蛇游戏
+        // Path: 112.js
+        // 蛇的构造函数
+        function Snake() {
+            this.width = 30;
+            this.height = 30;
+            this.body = [
+                { x: 3, y: 2, color: 'red' },
+                { x: 2, y: 2, color: 'orange' },
+                { x: 1, y: 2, color: 'orange' }
+            ];
+            this.direction = 'right';
+        }
+        // 实物的构造函数
+        function Food() {
+            this.width = 30;
+            this.height = 30;
+            this.x = 0;
+            this.y = 0;
+            this.color = 'green';
+        }
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var snake = new Snake();
+        var food = new Food();
+        var timer = null;
+        var score = 0;
+        var speed = 200;
+        var flag = true;
+        // 绘制贪吃蛇游戏的背景
+        function drawBg() {
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, 600, 600);
+        }
+        // 绘制网格
+        function drawGrid() {
+            ctx.strokeStyle = '#ccc';
+            for (var i = 0; i < 20; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, i * 30);
+                ctx.lineTo(600, i * 30);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(i * 30, 0);
+                ctx.lineTo(i * 30, 600);
+                ctx.stroke();
+            }
+        }
+        // 绘制分数
+        function drawScore() {
+            ctx.font = '20px 微软雅黑';
+            ctx.fillStyle = 'red';
+            ctx.fillText('分数：' + score, 20, 30);
+        }
+        // 绘制蛇
+        function drawSnake() {
+            for (var i = 0; i < snake.body.length; i++) {
+                ctx.fillStyle = snake.body[i].color;
+                ctx.fillRect(snake.body[i].x * snake.width, snake.body[i].y * snake.height, snake.width, snake.height);
+            }
+        }
+        // 开始游戏
+        function startGame() {
+            drawBg();
+            drawGrid();
+            drawScore();
+            drawSnake();
+            drawFood();
+            move();
+        }
+    </script>
+</body>
+
+</html>
